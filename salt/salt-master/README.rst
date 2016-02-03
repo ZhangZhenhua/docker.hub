@@ -19,5 +19,5 @@ sudo docker pull zhangzhenhua/salt-master
 Run
 ___
 
-sudo docker rm salt-master
-sudo docker run -d --name=salt-master zhangzhenhua/salt-master
+# sudo docker rm salt-master
+sudo docker run --rm -d --name=salt-master zhangzhenhua/salt-master
