@@ -27,3 +27,8 @@ EXPOSE 4505 4506
 ADD start-salt-master.sh /usr/local/bin/start-salt-master.sh
 RUN chmod a+x /usr/local/bin/start-salt-master.sh
 CMD "/usr/local/bin/start-salt-master.sh"
+
+# Add reactor
+ADD master /etc/salt/master
+RUN mkdir /srv/reactor
+ADD reactor/* /srv/reactor/
