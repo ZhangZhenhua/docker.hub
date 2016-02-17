@@ -18,7 +18,7 @@ RUN apt-get update
 RUN apt-get install -y salt-minion
 
 # Volumes
-VOLUME ['/etc/salt/pki', '/var/cache/salt', '/var/logs/salt', '/etc/salt/master.d', '/srv/salt']
+VOLUME ["/etc/salt/pki", "/var/cache/salt", "/var/logs/salt", "/etc/salt/master.d", "/srv/salt"]
 
 # Ports
 EXPOSE 4505 4506
