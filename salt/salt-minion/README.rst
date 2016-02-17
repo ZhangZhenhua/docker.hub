@@ -20,4 +20,4 @@ Run
 ___
 
 sudo docker rm salt-minion
-sudo docker run -d --name=salt-minion zhangzhenhua/salt-minion
+sudo docker run -d --name=salt-minion --net eon-iaas-br0 --ip 192.188.0.101 zhangzhenhua/salt-minion

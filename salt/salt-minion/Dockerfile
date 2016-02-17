@@ -20,10 +20,14 @@ RUN apt-get install -y salt-minion
 # Volumes
 VOLUME ["/etc/salt/pki", "/var/cache/salt", "/var/logs/salt", "/etc/salt/master.d", "/srv/salt"]
 
+# Salt Master
+RUN echo "192.188.0.100 salt" >> /etc/hosts
+
 # Ports
 EXPOSE 4505 4506
 
 # Run Command
 ADD start-salt-minion.sh /usr/local/bin/start-salt-minion.sh
+ADD minion /etc/salt/minion
 RUN chmod a+x /usr/local/bin/start-salt-minion.sh
 CMD "/usr/local/bin/start-salt-minion.sh"
