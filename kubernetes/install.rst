@@ -4,6 +4,7 @@ INSTALL
 Install kubernetes on 4 nodes, ubuntu 14.04, root
 
 ::
+
     172.31.0.19 rgw1    master
     172.31.0.17 ceph1   minion
     172.31.0.16 ceph2   minion
@@ -17,16 +18,20 @@ _______________
 Install
 _______
 
-# get source
-++++++++++++
+get source
+++++++++++
+
 ::
+
     git clone https://github.com/GoogleCloudPlatform/kubernetes.git
     cd kubernetes/
     git checkout v1.1.8 -b v1.1.8　# latest stable release
 
-# build
-+++++++
+build
++++++
+
 ::
+
     cd cluster/ubuntu
     ./build.sh  # download etcd, flannel...
     ls binaries/*
@@ -42,9 +47,11 @@ _______
 
     cp binaries/kubectl /usr/local/bin/
 
-# THIS SECTION MIGHT NOT BE NECESSARY
-+++++++++++++++++++++++++++++++++++++
+THIS SECTION MIGHT NOT BE NECESSARY
++++++++++++++++++++++++++++++++++++
+
 ::
+
     kubectl config set preferences.colors true
     kubectl config set-credentials myself --username=admin --password=secret
     kubectl config set-cluster kubernetes --server=http://localhost:8080 --insecure-skip-tls-verify=true
@@ -55,17 +62,20 @@ _______
     cat ~/.kube/config
 
 
-# check service status, start if necessary
-++++++++++++++++++++++++++++++++++++++++++
+check service status, start if necessary
+++++++++++++++++++++++++++++++++++++++++
+
 ::
+
     service kube-apiserver status
     service kube-controller-manager status
     service kube-scheduler status
 
-# verification
-++++++++++++++
+verification
+++++++++++++
 
 ::
+
     root@rgw1:~# kubectl version
     Client Version: version.Info{Major:"1", Minor:"0", GitVersion:"v1.0.3", GitCommit:"61c6ac5f350253a4dc002aee97b7db7ff01ee4ca", GitTreeState:"clean"}
     Server Version: version.Info{Major:"1", Minor:"0", GitVersion:"v1.0.3", GitCommit:"61c6ac5f350253a4dc002aee97b7db7ff01ee4ca", GitTreeState:"clean"}
@@ -82,6 +92,7 @@ ______
 +++++++++++++
 
 ::
+
     root@rgw1:~/kubernetes/cluster# KUBERNETES_PROVIDER=ubuntu ./kube-up.sh
     ... Starting cluster using provider: ubuntu
     ... calling verify-prereqs
@@ -91,6 +102,7 @@ ______
     ./../cluster/../cluster/ubuntu/util.sh: line 48: roles[${ii}]: unbound variable
 
 ::
+
     root@rgw1:~/kubernetes# git diff
     diff --git a/cluster/ubuntu/config-default.sh b/cluster/ubuntu/config-default.sh
     index 2614001..8097c5b 100755
@@ -110,12 +122,14 @@ ______
 
 2. connect refused 
 ++++++++++++++++++
+
 ::
 
     root@rgw1:~/kubernetes/cluster/ubuntu/binaries# ./kubectl get nodes
     error: couldn't read version from server: Get http://localhost:8080/api: dial tcp 127.0.0.1:8080: connection refused
 
 ::
+
     Steps:
     netstat -ntpl --> not finding port 8080
     service kube-apiserver start --> process runs few seconds then fail
