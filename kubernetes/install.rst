@@ -85,6 +85,12 @@ verification
     172.31.0.17   kubernetes.io/hostname=172.31.0.17   Ready
     172.31.0.18   kubernetes.io/hostname=172.31.0.18   Ready
 
+
+tear down cluster
++++++++++++++++++
+
+KUBE_MASTER=172.31.0.19 KUBE_MASTER_IP=172.31.0.19 KUBECTL_PATH=/usr/local/bin/kubectl KUBERNETES_PROVIDER=ubuntu ./kube-down.sh
+
 ISSUES
 ______
 
@@ -141,3 +147,31 @@ https://github.com/kubernetes/kubernetes/pull/22249
     /var/log/upstart/kube-apiserver.log shows: plugins.go:106] Unknown admission plugin: DenyEscalatingExec
     remove DenyEscalatingExec in section --admission-control from /etc/default/kube-apiserver.
     start kube-apiserver again
+
+3. can't ping gcr.io
+++++++++++++++++++++
+
+Well, GFW, you know.
+
+::
+
+    root@ceph1:~# docker pull docker.io/kubernetes/pause
+    Using default tag: latest
+    latest: Pulling from kubernetes/pause
+    a3ed95caeb02: Pull complete
+    f72a00a23f01: Pull complete
+    Digest: sha256:2088df8eb02f10aae012e6d4bc212cabb0ada93cb05f09e504af0c9811e0ca14
+    Status: Downloaded newer image for kubernetes/pause:latest
+    root@ceph1:~# docker tag docker.io/kubernetes/pause gcr.io/google_containers/pause:0.8.0
+    root@ceph1:~# docker images
+
+::
+
+    start the kubelet like below will solve the issue that when you cannot connect to google, but can connect to docker.io:
+    kubelet --pod-infra-container-image="docker.io/kubernetes/pause"
+
+::
+
+    https://github.com/kubernetes/kubernetes/issues/6888
+    https://github.com/kubernetes/kubernetes/issues/7332
+
