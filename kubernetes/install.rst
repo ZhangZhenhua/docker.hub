@@ -175,3 +175,30 @@ Well, GFW, you know.
     https://github.com/kubernetes/kubernetes/issues/6888
     https://github.com/kubernetes/kubernetes/issues/7332
 
+4. Enable https for API server
+++++++++++++++++++++++++++++++
+
+Our testing evn is built on top of openstack VMs, which have internal and external
+networks. The cluster communicate via internal IP and client access API server via
+external IP. This cause certification failure issue because the cert file doesn't contain
+the external IP. Hacked below patch (in cluster/ubuntu/util.sh) to workaround this issue.
+
+::
+    
+    @@ -447,6 +449,7 @@ function provision-master() {
+   EXTRA_SANS=(
+     IP:$MASTER_IP
+     IP:${SERVICE_CLUSTER_IP_RANGE%.*}.1
++    IP:14.14.14.195
+     DNS:kubernetes
+     DNS:kubernetes.default
+     DNS:kubernetes.default.svc
+@@ -619,6 +622,7 @@ function provision-masterandnode() {
+   EXTRA_SANS=(
+     IP:${MASTER_IP}
+     IP:${SERVICE_CLUSTER_IP_RANGE%.*}.1
++    IP:14.14.14.195
+     DNS:kubernetes
+     DNS:kubernetes.default
+     DNS:kubernetes.default.svc
+
