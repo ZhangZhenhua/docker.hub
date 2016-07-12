@@ -202,3 +202,7 @@ the external IP. Hacked below patch (in cluster/ubuntu/util.sh) to workaround th
      DNS:kubernetes.default
      DNS:kubernetes.default.svc
 
+
+
+
+./boom -m PUT -d value="bar" -n 1000 -c 1 http://14.14.14.114:4001/v2/keys/bench
