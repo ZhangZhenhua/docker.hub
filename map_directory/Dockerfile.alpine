@@ -1,0 +1,8 @@
+# EonCloud IAAS
+
+FROM alpine:latest
+MAINTAINER Zhang Zhenhua <zhangzhenhua@eoncloud.com.cn>
+
+ADD timerprint.sh /root/timerprint.sh
+
+CMD "/root/timerprint.sh"
